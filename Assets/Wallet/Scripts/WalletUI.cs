@@ -23,8 +23,6 @@ namespace Wallet
                 return;
             }
 
-            _walletService = walletService;
-
             if (_currencyViewPrefab == null || _container == null)
             {
                 Debug.LogError("WalletUI: не назначены _currencyViewPrefab или _container.");
@@ -32,6 +30,13 @@ namespace Wallet
                 return;
             }
 
+            if (HasAllIcons() == false)
+            {
+                enabled = false;
+                return;
+            }
+
+            _walletService = walletService;
             CreateCurrencyViews();
         }
 
@@ -39,13 +44,32 @@ namespace Wallet
         {
             foreach (CurrencyType type in Enum.GetValues(typeof(CurrencyType)))
             {
-                IReadOnlyVariable<int> currency = _walletService.GetCurrency(type);
-                if (currency == null)
-                    continue;
-
                 CurrencyViewUI view = Instantiate(_currencyViewPrefab, _container);
-                view.Initialize(GetIcon(type), currency);
+                view.Initialize(GetIcon(type), _walletService.GetCurrency(type));
             }
+        }
+
+        private bool HasAllIcons()
+        {
+            if (_coinsIcon == null)
+            {
+                Debug.LogError("WalletUI: не назначена _coinsIcon.");
+                return false;
+            }
+
+            if (_gemsIcon == null)
+            {
+                Debug.LogError("WalletUI: не назначена _gemsIcon.");
+                return false;
+            }
+
+            if (_energyIcon == null)
+            {
+                Debug.LogError("WalletUI: не назначена _energyIcon.");
+                return false;
+            }
+
+            return true;
         }
 
         private Sprite GetIcon(CurrencyType type)
@@ -59,8 +83,7 @@ namespace Wallet
                 case CurrencyType.Energy:
                     return _energyIcon;
                 default:
-                    Debug.LogError($"WalletUI: неизвестный тип валюты {type}.");
-                    return null;
+                    throw new ArgumentException($"WalletUI: неизвестный тип валюты {type}.", nameof(type));
             }
         }
     }

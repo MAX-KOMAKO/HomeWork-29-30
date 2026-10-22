@@ -8,7 +8,7 @@ namespace Wallet
     {
         private readonly float _timeLimit;
         private readonly MonoBehaviour _coroutineRunner;
-        
+
         private readonly ReactiveVariable<float> _currentTime = new();
         private Coroutine _process;
         private bool _isRunning;
@@ -19,9 +19,12 @@ namespace Wallet
 
         public ReactiveTimer(float timeLimit, MonoBehaviour coroutineRunner)
         {
+            if (coroutineRunner == null)
+                throw new ArgumentNullException(nameof(coroutineRunner));
+
             if (timeLimit <= 0)
                 throw new ArgumentOutOfRangeException(nameof(timeLimit), "Время таймера должно быть больше нуля.");
-            
+
             _timeLimit = timeLimit;
             _coroutineRunner = coroutineRunner;
             _currentTime.Value = _timeLimit;
@@ -29,7 +32,7 @@ namespace Wallet
 
         public void StartTimer()
         {
-            if (_isRunning) 
+            if (_isRunning)
                 StopTimer();
 
             _currentTime.Value = _timeLimit;
@@ -44,6 +47,7 @@ namespace Wallet
                 _coroutineRunner.StopCoroutine(_process);
                 _process = null;
             }
+
             _isRunning = false;
         }
 
@@ -51,10 +55,11 @@ namespace Wallet
         {
             while (_currentTime.Value > 0)
             {
-                _currentTime.Value -= Time.deltaTime;
-                
-                if (_currentTime.Value < 0)
-                    _currentTime.Value = 0;
+                float newValue = _currentTime.Value - Time.deltaTime;
+                if (newValue < 0)
+                    newValue = 0;
+
+                _currentTime.Value = newValue;
 
                 yield return null;
             }

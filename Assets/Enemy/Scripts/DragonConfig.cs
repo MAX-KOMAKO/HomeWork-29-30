@@ -1,13 +1,16 @@
 using UnityEngine;
 
-[System.Serializable]
-public class DragonConfig
+namespace Enemies
 {
-    [SerializeField] private GameObject _prefab;
-    [SerializeField] private int _fireDamage;
-    [SerializeField] private int _armor;
+    [System.Serializable]
+    public class DragonConfig
+    {
+        [SerializeField] private Dragon _prefab;
+        [SerializeField] private int _fireDamage;
+        [SerializeField] private int _armor;
 
-    public GameObject Prefab => _prefab;
-    public int FireDamage => _fireDamage;
-    public int Armor => _armor;
+        public Dragon Prefab => _prefab;
+        public int FireDamage => _fireDamage;
+        public int Armor => _armor;
+    }
 }

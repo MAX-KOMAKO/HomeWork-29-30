@@ -21,39 +21,20 @@ namespace Wallet
 
         public IReadOnlyVariable<int> GetCurrency(CurrencyType type)
         {
-            if (_currencies.TryGetValue(type, out ReactiveVariable<int> variable) == false)
-            {
-                Debug.LogError($"Валюта {type} отсутствует в кошельке.");
-                return null;
-            }
-
-            return variable;
+            return GetVariable(type);
         }
 
         public int GetBalance(CurrencyType type)
         {
-            if (_currencies.TryGetValue(type, out ReactiveVariable<int> variable) == false)
-            {
-                Debug.LogError($"Валюта {type} отсутствует в кошельке.");
-                return 0;
-            }
-
-            return variable.Value;
+            return GetVariable(type).Value;
         }
 
         public void Add(CurrencyType type, int amount)
         {
             if (amount <= 0)
-            {
-                Debug.LogError($"Некорректная сумма пополнения: {amount}. Сумма должна быть больше нуля.");
-                return;
-            }
+                throw new ArgumentOutOfRangeException(nameof(amount), "Сумма пополнения должна быть больше нуля.");
 
-            if (_currencies.TryGetValue(type, out ReactiveVariable<int> variable) == false)
-            {
-                Debug.LogError($"Валюта {type} отсутствует в кошельке.");
-                return;
-            }
+            ReactiveVariable<int> variable = GetVariable(type);
 
             int newBalance;
             try
@@ -72,16 +53,9 @@ namespace Wallet
         public void Subtract(CurrencyType type, int amount)
         {
             if (amount <= 0)
-            {
-                Debug.LogError($"Некорректная сумма списания: {amount}. Сумма должна быть больше нуля.");
-                return;
-            }
+                throw new ArgumentOutOfRangeException(nameof(amount), "Сумма списания должна быть больше нуля.");
 
-            if (_currencies.TryGetValue(type, out ReactiveVariable<int> variable) == false)
-            {
-                Debug.LogError($"Валюта {type} отсутствует в кошельке.");
-                return;
-            }
+            ReactiveVariable<int> variable = GetVariable(type);
 
             if (variable.Value < amount)
             {
@@ -90,6 +64,14 @@ namespace Wallet
             }
 
             variable.Value -= amount;
+        }
+
+        private ReactiveVariable<int> GetVariable(CurrencyType type)
+        {
+            if (_currencies.TryGetValue(type, out ReactiveVariable<int> variable) == false)
+                throw new ArgumentException($"Валюта {type} отсутствует в кошельке.", nameof(type));
+
+            return variable;
         }
     }
 }

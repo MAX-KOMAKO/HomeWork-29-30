@@ -1,42 +1,66 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InventoryTest : MonoBehaviour
+namespace InventorySystem
 {
-    private const string SWORD = "Меч";
-    private const string POTION = "Зелье";
-    private const string SHIELD = "Щит";
-    private const int MAX_SIZE = 10;
-
-    private void Start()
+    public class InventoryTest : MonoBehaviour
     {
-        Inventory inventory = new Inventory(new List<Item>(), MAX_SIZE);
+        private const string SWORD = "Меч";
+        private const string POTION = "Зелье";
+        private const string SHIELD = "Щит";
+        private const int MAX_SIZE = 10;
 
-        inventory.ItemAdded += item => Debug.Log($"Событие: Добавлен {item.Name} x{item.Count}");
-        inventory.ItemRemoved += item => Debug.Log($"Событие: Изъят {item.Name} x{item.Count}");
+        private Inventory _inventory;
 
-        Item sword1 = new Item(SWORD, 2);
-        Item sword2 = new Item(SWORD, 1);
-        Item potion = new Item(POTION, 5);
-        Item shield = new Item(SHIELD, 5);
+        private void Start()
+        {
+            _inventory = new Inventory(new List<Item>(), MAX_SIZE);
 
-        Debug.Log("--- Добавление предметов ---");
-        inventory.TryAdd(sword1);
-        inventory.TryAdd(sword2);
-        inventory.TryAdd(potion);
-        
-        Debug.Log($"Текущий размер: {inventory.CurrentSize} / {inventory.MaxSize}");
-        
-        Debug.Log("--- Попытка добавить Щит (не хватит места) ---");
-        inventory.TryAdd(shield); 
+            _inventory.ItemAdded += OnItemAdded;
+            _inventory.ItemRemoved += OnItemRemoved;
 
-        Debug.Log("--- Забор предметов (Меч, 3 шт) ---");
-        List<Item> takenSwords = inventory.RemoveItems(SWORD, 3);
-        
-        Debug.Log($"Забрано мечей: {takenSwords.Count} шт. (суммарно)");
-        
-        Debug.Log($"Текущий размер после забора: {inventory.CurrentSize} / {inventory.MaxSize}");
-        
-        inventory.Dispose();
+            Item sword1 = new Item(SWORD, 2);
+            Item sword2 = new Item(SWORD, 1);
+            Item potion = new Item(POTION, 5);
+            Item shield = new Item(SHIELD, 5);
+
+            Debug.Log("--- Добавление предметов ---");
+            _inventory.TryAdd(sword1);
+            _inventory.TryAdd(sword2);
+            _inventory.TryAdd(potion);
+            
+            Debug.Log($"Текущий размер: {_inventory.CurrentSize} / {_inventory.MaxSize}");
+            
+            Debug.Log("--- Попытка добавить Щит (не хватит места) ---");
+            _inventory.TryAdd(shield); 
+
+            Debug.Log("--- Забор предметов (Меч, 3 шт) ---");
+            IReadOnlyList<Item> takenSwords = _inventory.RemoveItems(SWORD, 3);
+            
+            Debug.Log($"Забрано мечей: {takenSwords.Count} шт. (суммарно)");
+            
+            Debug.Log($"Текущий размер после забора: {_inventory.CurrentSize} / {_inventory.MaxSize}");
+            
+            _inventory.Dispose();
+        }
+
+        private void OnDestroy()
+        {
+            if (_inventory != null)
+            {
+                _inventory.ItemAdded -= OnItemAdded;
+                _inventory.ItemRemoved -= OnItemRemoved;
+            }
+        }
+
+        private void OnItemAdded(Item item)
+        {
+            Debug.Log($"Событие: Добавлен {item.Name} x{item.Count}");
+        }
+
+        private void OnItemRemoved(Item item)
+        {
+            Debug.Log($"Событие: Изъят {item.Name} x{item.Count}");
+        }
     }
 }

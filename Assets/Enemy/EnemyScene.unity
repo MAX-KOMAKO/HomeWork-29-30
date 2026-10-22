@@ -131,7 +131,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 103062263}
-  - component: {fileID: 103062262}
+  - component: {fileID: 103062264}
   m_Layer: 0
   m_Name: EnemyExample
   m_TagString: Untagged
@@ -139,40 +139,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &103062262
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 103062261}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9d24acdb7e36493299f63d70859abb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _spawner: {fileID: 934096887}
-  _orkConfigs:
-  - _prefab: {fileID: 3547694832830897434, guid: 6b6b0b9ee2b434851ae79154cec728b0, type: 3}
-    _damage: 10
-    _health: 100
-  - _prefab: {fileID: 3547694832830897434, guid: 6b6b0b9ee2b434851ae79154cec728b0, type: 3}
-    _damage: 20
-    _health: 150
-  _elfConfigs:
-  - _prefab: {fileID: 8672285601904173095, guid: d13a6ac1dc9b34da7bc2313c5e61c6c8, type: 3}
-    _mana: 30
-    _agility: 100
-  - _prefab: {fileID: 8672285601904173095, guid: d13a6ac1dc9b34da7bc2313c5e61c6c8, type: 3}
-    _mana: 40
-    _agility: 200
-  _dragonConfigs:
-  - _prefab: {fileID: 2561289635281418617, guid: 810bf91df5c7d4ac3a0563c8648bb162, type: 3}
-    _fireDamage: 50
-    _armor: 200
-  - _prefab: {fileID: 2561289635281418617, guid: 810bf91df5c7d4ac3a0563c8648bb162, type: 3}
-    _fireDamage: 60
-    _armor: 300
 --- !u!4 &103062263
 Transform:
   m_ObjectHideFlags: 0
@@ -188,6 +154,39 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &103062264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 103062261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9d24acdb7e36493299f63d70859abb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _orkConfigs:
+  - _prefab: {fileID: 6833423772587467031, guid: 6b6b0b9ee2b434851ae79154cec728b0, type: 3}
+    _damage: 10
+    _health: 100
+  - _prefab: {fileID: 6833423772587467031, guid: 6b6b0b9ee2b434851ae79154cec728b0, type: 3}
+    _damage: 20
+    _health: 200
+  _elfConfigs:
+  - _prefab: {fileID: 2769327724478419419, guid: d13a6ac1dc9b34da7bc2313c5e61c6c8, type: 3}
+    _mana: 30
+    _agility: 300
+  - _prefab: {fileID: 2769327724478419419, guid: d13a6ac1dc9b34da7bc2313c5e61c6c8, type: 3}
+    _mana: 40
+    _agility: 400
+  _dragonConfigs:
+  - _prefab: {fileID: 5143370202068570599, guid: 810bf91df5c7d4ac3a0563c8648bb162, type: 3}
+    _fireDamage: 50
+    _armor: 500
+  - _prefab: {fileID: 5143370202068570599, guid: 810bf91df5c7d4ac3a0563c8648bb162, type: 3}
+    _fireDamage: 60
+    _armor: 600
 --- !u!1 &877157168
 GameObject:
   m_ObjectHideFlags: 0
@@ -280,54 +279,9 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &934096886
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 934096888}
-  - component: {fileID: 934096887}
-  m_Layer: 0
-  m_Name: EnemySpawner
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &934096887
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 934096886}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c81855c5b04d4ff19d6e6dc0a5eba0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &934096888
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 934096886}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 877157171}
-  - {fileID: 934096888}
   - {fileID: 103062263}

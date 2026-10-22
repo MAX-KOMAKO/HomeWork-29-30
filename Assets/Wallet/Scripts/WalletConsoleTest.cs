@@ -4,24 +4,24 @@ namespace Wallet
 {
     public class WalletConsoleTest : MonoBehaviour
     {
-        private const KeyCode AddCoinsKey = KeyCode.Alpha1;
-        private const KeyCode SubtractCoinsKey = KeyCode.Alpha2;
-        
-        private const KeyCode AddGemsKey = KeyCode.Alpha3;
-        private const KeyCode SubtractGemsKey = KeyCode.Alpha4;
-        
-        private const KeyCode AddEnergyKey = KeyCode.Alpha5;
-        private const KeyCode SubtractEnergyKey = KeyCode.Alpha6;
+        private const KeyCode ADD_COINS_KEY = KeyCode.Alpha1;
+        private const KeyCode SUBTRACT_COINS_KEY = KeyCode.Alpha2;
 
-        private const int DefaultCoinsDelta = 50;
-        private const int DefaultGemsDelta = 10;
-        private const int DefaultEnergyDelta = 20;
+        private const KeyCode ADD_GEMS_KEY = KeyCode.Alpha3;
+        private const KeyCode SUBTRACT_GEMS_KEY = KeyCode.Alpha4;
+
+        private const KeyCode ADD_ENERGY_KEY = KeyCode.Alpha5;
+        private const KeyCode SUBTRACT_ENERGY_KEY = KeyCode.Alpha6;
+
+        private const int DEFAULT_COINS_DELTA = 50;
+        private const int DEFAULT_GEMS_DELTA = 10;
+        private const int DEFAULT_ENERGY_DELTA = 20;
 
         [SerializeField] private WalletInstaller _walletInstaller;
 
-        [SerializeField] private int _coinsDelta = DefaultCoinsDelta;
-        [SerializeField] private int _gemsDelta = DefaultGemsDelta;
-        [SerializeField] private int _energyDelta = DefaultEnergyDelta;
+        [SerializeField] private int _coinsDelta = DEFAULT_COINS_DELTA;
+        [SerializeField] private int _gemsDelta = DEFAULT_GEMS_DELTA;
+        [SerializeField] private int _energyDelta = DEFAULT_ENERGY_DELTA;
 
         private WalletService _walletService;
 
@@ -45,22 +45,22 @@ namespace Wallet
 
         private void Update()
         {
-            if (Input.GetKeyDown(AddCoinsKey))
+            if (Input.GetKeyDown(ADD_COINS_KEY))
                 AddCurrency(CurrencyType.Coins, _coinsDelta);
 
-            if (Input.GetKeyDown(SubtractCoinsKey))
+            if (Input.GetKeyDown(SUBTRACT_COINS_KEY))
                 SubtractCurrency(CurrencyType.Coins, _coinsDelta);
 
-            if (Input.GetKeyDown(AddGemsKey))
+            if (Input.GetKeyDown(ADD_GEMS_KEY))
                 AddCurrency(CurrencyType.Gems, _gemsDelta);
 
-            if (Input.GetKeyDown(SubtractGemsKey))
+            if (Input.GetKeyDown(SUBTRACT_GEMS_KEY))
                 SubtractCurrency(CurrencyType.Gems, _gemsDelta);
 
-            if (Input.GetKeyDown(AddEnergyKey))
+            if (Input.GetKeyDown(ADD_ENERGY_KEY))
                 AddCurrency(CurrencyType.Energy, _energyDelta);
 
-            if (Input.GetKeyDown(SubtractEnergyKey))
+            if (Input.GetKeyDown(SUBTRACT_ENERGY_KEY))
                 SubtractCurrency(CurrencyType.Energy, _energyDelta);
         }
 

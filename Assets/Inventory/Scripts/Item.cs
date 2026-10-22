@@ -1,21 +1,23 @@
 using System;
-using UnityEngine;
 
-[Serializable]
-public class Item
+namespace InventorySystem
 {
-    public string Name { get; }
-    public int Count { get; }
-
-    public Item(string name, int count)
+    [Serializable]
+    public class Item
     {
-        if (string.IsNullOrEmpty(name))
-            throw new ArgumentException("Имя предмета не может быть пустым.", nameof(name));
-            
-        if (count <= 0)
-            throw new ArgumentOutOfRangeException(nameof(count), "Количество должно быть больше нуля.");
+        public string Name { get; }
+        public int Count { get; }
 
-        Name = name;
-        Count = count;
+        public Item(string name, int count)
+        {
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentException("Имя предмета не может быть пустым.", nameof(name));
+
+            if (count <= 0)
+                throw new ArgumentOutOfRangeException(nameof(count), "Количество должно быть больше нуля.");
+
+            Name = name;
+            Count = count;
+        }
     }
 }

@@ -1,13 +1,16 @@
 using UnityEngine;
 
-[System.Serializable]
-public class ElfConfig
+namespace Enemies
 {
-    [SerializeField] private GameObject _prefab;
-    [SerializeField] private int _mana;
-    [SerializeField] private float _agility;
+    [System.Serializable]
+    public class ElfConfig
+    {
+        [SerializeField] private Elf _prefab;
+        [SerializeField] private int _mana;
+        [SerializeField] private float _agility;
 
-    public GameObject Prefab => _prefab;
-    public int Mana => _mana;
-    public float Agility => _agility;
+        public Elf Prefab => _prefab;
+        public int Mana => _mana;
+        public float Agility => _agility;
+    }
 }

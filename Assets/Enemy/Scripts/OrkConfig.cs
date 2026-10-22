@@ -1,13 +1,16 @@
 using UnityEngine;
 
-[System.Serializable]
-public class OrkConfig
+namespace Enemies
 {
-    [SerializeField] private GameObject _prefab;
-    [SerializeField] private int _damage;
-    [SerializeField] private int _health;
+    [System.Serializable]
+    public class OrkConfig
+    {
+        [SerializeField] private Ork _prefab;
+        [SerializeField] private int _damage;
+        [SerializeField] private int _health;
 
-    public GameObject Prefab => _prefab;
-    public int Damage => _damage;
-    public int Health => _health;
+        public Ork Prefab => _prefab;
+        public int Damage => _damage;
+        public int Health => _health;
+    }
 }
