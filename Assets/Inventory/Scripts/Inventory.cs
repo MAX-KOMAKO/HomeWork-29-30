@@ -3,9 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Inventory
+public class Inventory : IDisposable
 {
-    private readonly List<Item> _items;
+    private const string NullItemError = "Попытка добавить null вместо предмета.";
+    private const string NotEnoughSpaceWarning = "Недостаточно места в инвентаре.";
+    private const string InvalidInitialSizeError = "Начальное содержимое превышает максимальный размер инвентаря.";
+
+    public event Action<Item> ItemAdded;
+    public event Action<Item> ItemRemoved;
+
+    private readonly List<Item> _items = new();
 
     public int MaxSize { get; }
     public int CurrentSize => _items.Sum(item => item.Count);
@@ -16,32 +23,40 @@ public class Inventory
         if (maxSize <= 0)
             throw new ArgumentOutOfRangeException(nameof(maxSize), "Максимальный размер должен быть больше нуля.");
 
-        _items = initialItems != null ? new List<Item>(initialItems) : new List<Item>();
         MaxSize = maxSize;
 
-        if (CurrentSize > MaxSize)
-            Debug.LogWarning("Начальное содержимое превышает максимальный размер инвентаря.");
+        if (initialItems != null)
+        {
+            foreach (Item item in initialItems)
+            {
+                if (CurrentSize + item.Count > MaxSize)
+                    throw new ArgumentException(InvalidInitialSizeError, nameof(initialItems));
+
+                _items.Add(item);
+            }
+        }
     }
 
     public bool TryAdd(Item item)
     {
         if (item == null)
         {
-            Debug.LogError("Попытка добавить null вместо предмета.");
+            Debug.LogError(NullItemError);
             return false;
         }
 
         if (CurrentSize + item.Count > MaxSize)
         {
-            Debug.LogWarning($"Недостаточно места. Текущий размер: {CurrentSize}, добавляем: {item.Count}, максимум: {MaxSize}.");
+            Debug.LogWarning(NotEnoughSpaceWarning);
             return false;
         }
 
         _items.Add(item);
+        ItemAdded?.Invoke(item);
         return true;
     }
 
-    public List<Item> GetItemsBy(string name, int count)
+    public List<Item> RemoveItems(string name, int count)
     {
         if (string.IsNullOrEmpty(name))
             throw new ArgumentException("Имя предмета не может быть пустым.", nameof(name));
@@ -61,24 +76,31 @@ public class Inventory
 
             if (item.Count <= remaining)
             {
-                result.Add(new Item(item.Name, item.Count));
+                result.Add(item);
                 remaining -= item.Count;
                 _items.RemoveAt(i);
+                ItemRemoved?.Invoke(item);
             }
             else
             {
-                if (item.TryReduceCount(remaining, out int taken))
-                {
-                    result.Add(new Item(item.Name, taken));
-                    remaining -= taken;
-                }
-                break;
+                int takenCount = remaining;
+                int leftCount = item.Count - takenCount;
+
+                _items[i] = new Item(item.Name, leftCount);
+                result.Add(new Item(item.Name, takenCount));
+                remaining = 0;
+                
+                ItemRemoved?.Invoke(new Item(item.Name, takenCount));
+                ItemAdded?.Invoke(_items[i]);
             }
         }
 
-        if (remaining > 0)
-            Debug.LogWarning($"Запрошено {count} предметов '{name}', но найдено только {count - remaining}.");
-
         return result;
+    }
+
+    public void Dispose()
+    {
+        ItemAdded = null;
+        ItemRemoved = null;
     }
 }

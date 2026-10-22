@@ -1,8 +1,11 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EnemyExample : MonoBehaviour
 {
     private const int EnemiesPerType = 3;
+    private const float SpawnAreaRadius = 5f;
 
     [SerializeField] private EnemySpawner _spawner;
     
@@ -28,7 +31,7 @@ public class EnemyExample : MonoBehaviour
         SpawnRandomEnemies(_dragonConfigs, _spawner.SpawnDragon);
     }
 
-    private void SpawnRandomEnemies<TConfig>(TConfig[] configs, System.Func<TConfig, Vector3, Enemy> spawnMethod)
+    private void SpawnRandomEnemies<TConfig>(TConfig[] configs, Func<TConfig, Vector3, Enemy> spawnMethod)
     {
         if (configs == null || configs.Length == 0)
         {
@@ -49,8 +52,8 @@ public class EnemyExample : MonoBehaviour
 
     private Vector3 GetRandomPosition()
     {
-        float x = Random.Range(-5f, 5f);
-        float y = Random.Range(-5f, 5f);
-        return new Vector3(x, y, 0f);
+        float positionX = Random.Range(-SpawnAreaRadius, SpawnAreaRadius);
+        float positionY = Random.Range(-SpawnAreaRadius, SpawnAreaRadius);
+        return new Vector3(positionX, positionY, 0f);
     }
 }

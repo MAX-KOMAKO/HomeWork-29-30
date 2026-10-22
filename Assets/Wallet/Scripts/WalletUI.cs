@@ -24,16 +24,6 @@ namespace Wallet
             }
 
             _walletService = walletService;
-        }
-
-        private void Start()
-        {
-            if (_walletService == null)
-            {
-                Debug.LogError("WalletUI: не передан WalletService.");
-                enabled = false;
-                return;
-            }
 
             if (_currencyViewPrefab == null || _container == null)
             {

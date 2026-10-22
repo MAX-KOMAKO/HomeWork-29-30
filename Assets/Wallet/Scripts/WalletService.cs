@@ -45,7 +45,7 @@ namespace Wallet
         {
             if (amount <= 0)
             {
-                Debug.LogWarning($"Некорректная сумма пополнения: {amount}. Сумма должна быть больше нуля.");
+                Debug.LogError($"Некорректная сумма пополнения: {amount}. Сумма должна быть больше нуля.");
                 return;
             }
 
@@ -62,7 +62,7 @@ namespace Wallet
             }
             catch (OverflowException)
             {
-                Debug.LogWarning($"Переполнение баланса валюты {type}.");
+                Debug.LogError($"Переполнение баланса валюты {type}.");
                 return;
             }
 
@@ -73,7 +73,7 @@ namespace Wallet
         {
             if (amount <= 0)
             {
-                Debug.LogWarning($"Некорректная сумма списания: {amount}. Сумма должна быть больше нуля.");
+                Debug.LogError($"Некорректная сумма списания: {amount}. Сумма должна быть больше нуля.");
                 return;
             }
 

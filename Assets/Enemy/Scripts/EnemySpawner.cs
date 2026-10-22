@@ -2,11 +2,18 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
+    private const string InvalidOrkConfigError = "Некорректная конфигурация для спавна орка.";
+    private const string InvalidElfConfigError = "Некорректная конфигурация для спавна эльфа.";
+    private const string InvalidDragonConfigError = "Некорректная конфигурация для спавна дракона.";
+    private const string MissingOrkComponentError = "В префабе орка отсутствует компонент Ork.";
+    private const string MissingElfComponentError = "В префабе эльфа отсутствует компонент Elf.";
+    private const string MissingDragonComponentError = "В префабе дракона отсутствует компонент Dragon.";
+
     public Ork SpawnOrk(OrkConfig config, Vector3 position)
     {
         if (config == null || config.Prefab == null)
         {
-            Debug.LogError("Некорректная конфигурация для спавна орка.");
+            Debug.LogError(InvalidOrkConfigError);
             return null;
         }
 
@@ -14,7 +21,7 @@ public class EnemySpawner : MonoBehaviour
         
         if (instance.TryGetComponent(out Ork ork) == false)
         {
-            Debug.LogError("В префабе орка отсутствует компонент Ork.");
+            Debug.LogError(MissingOrkComponentError);
             Destroy(instance);
             return null;
         }
@@ -27,7 +34,7 @@ public class EnemySpawner : MonoBehaviour
     {
         if (config == null || config.Prefab == null)
         {
-            Debug.LogError("Некорректная конфигурация для спавна эльфа.");
+            Debug.LogError(InvalidElfConfigError);
             return null;
         }
 
@@ -35,7 +42,7 @@ public class EnemySpawner : MonoBehaviour
         
         if (instance.TryGetComponent(out Elf elf) == false)
         {
-            Debug.LogError("В префабе эльфа отсутствует компонент Elf.");
+            Debug.LogError(MissingElfComponentError);
             Destroy(instance);
             return null;
         }
@@ -48,7 +55,7 @@ public class EnemySpawner : MonoBehaviour
     {
         if (config == null || config.Prefab == null)
         {
-            Debug.LogError("Некорректная конфигурация для спавна дракона.");
+            Debug.LogError(InvalidDragonConfigError);
             return null;
         }
 
@@ -56,7 +63,7 @@ public class EnemySpawner : MonoBehaviour
         
         if (instance.TryGetComponent(out Dragon dragon) == false)
         {
-            Debug.LogError("В префабе дракона отсутствует компонент Dragon.");
+            Debug.LogError(MissingDragonComponentError);
             Destroy(instance);
             return null;
         }

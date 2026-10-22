@@ -4,8 +4,8 @@ using UnityEngine;
 [Serializable]
 public class Item
 {
-    public string Name { get; private set; }
-    public int Count { get; private set; }
+    public string Name { get; }
+    public int Count { get; }
 
     public Item(string name, int count)
     {
@@ -17,19 +17,5 @@ public class Item
 
         Name = name;
         Count = count;
-    }
-
-    public bool TryReduceCount(int amount, out int reducedAmount)
-    {
-        if (amount <= 0)
-        {
-            Debug.LogWarning($"Некорректное количество для списания: {amount}. Должно быть больше нуля.");
-            reducedAmount = 0;
-            return false;
-        }
-
-        reducedAmount = Mathf.Min(amount, Count);
-        Count -= reducedAmount;
-        return true;
     }
 }
