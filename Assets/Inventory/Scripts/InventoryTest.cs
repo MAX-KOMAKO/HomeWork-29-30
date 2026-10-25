@@ -5,62 +5,32 @@ namespace InventorySystem
 {
     public class InventoryTest : MonoBehaviour
     {
-        private const string SWORD = "Меч";
-        private const string POTION = "Зелье";
-        private const string SHIELD = "Щит";
-        private const int MAX_SIZE = 10;
-
-        private Inventory _inventory;
-
         private void Start()
         {
-            _inventory = new Inventory(new List<Item>(), MAX_SIZE);
-
-            _inventory.ItemAdded += OnItemAdded;
-            _inventory.ItemRemoved += OnItemRemoved;
-
-            Item sword1 = new Item(SWORD, 2);
-            Item sword2 = new Item(SWORD, 1);
-            Item potion = new Item(POTION, 5);
-            Item shield = new Item(SHIELD, 5);
+            Inventory inventory = new Inventory(10);
 
             Debug.Log("--- Добавление предметов ---");
-            _inventory.TryAdd(sword1);
-            _inventory.TryAdd(sword2);
-            _inventory.TryAdd(potion);
             
-            Debug.Log($"Текущий размер: {_inventory.CurrentSize} / {_inventory.MaxSize}");
+            Item sword1 = new Item("Меч", 2);
+            Item sword2 = new Item("Меч", 1);
+            Item potion = new Item("Зелье", 5);
+            Item shield = new Item("Щит", 5);
+
+            Debug.Log($"Добавлен Меч (2 шт): {inventory.TryAdd(sword1)}");
+            Debug.Log($"Добавлен Меч (1 шт): {inventory.TryAdd(sword2)}");
+            Debug.Log($"Добавлено Зелье (5 шт): {inventory.TryAdd(potion)}");
+            
+            Debug.Log($"Текущий размер: {inventory.CurrentSize} / {inventory.MaxSize}");
             
             Debug.Log("--- Попытка добавить Щит (не хватит места) ---");
-            _inventory.TryAdd(shield); 
+            Debug.Log($"Добавлен Щит (5 шт): {inventory.TryAdd(shield)}"); 
 
             Debug.Log("--- Забор предметов (Меч, 3 шт) ---");
-            IReadOnlyList<Item> takenSwords = _inventory.RemoveItems(SWORD, 3);
+            List<Item> takenSwords = inventory.RemoveItems("Меч", 3);
             
-            Debug.Log($"Забрано мечей: {takenSwords.Count} шт. (суммарно)");
+            Debug.Log($"Забрано мечей: {takenSwords.Count} объектов (суммарно).");
             
-            Debug.Log($"Текущий размер после забора: {_inventory.CurrentSize} / {_inventory.MaxSize}");
-            
-            _inventory.Dispose();
-        }
-
-        private void OnDestroy()
-        {
-            if (_inventory != null)
-            {
-                _inventory.ItemAdded -= OnItemAdded;
-                _inventory.ItemRemoved -= OnItemRemoved;
-            }
-        }
-
-        private void OnItemAdded(Item item)
-        {
-            Debug.Log($"Событие: Добавлен {item.Name} x{item.Count}");
-        }
-
-        private void OnItemRemoved(Item item)
-        {
-            Debug.Log($"Событие: Изъят {item.Name} x{item.Count}");
+            Debug.Log($"Текущий размер после забора: {inventory.CurrentSize} / {inventory.MaxSize}");
         }
     }
 }

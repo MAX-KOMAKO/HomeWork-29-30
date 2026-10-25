@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -18,21 +17,16 @@ namespace Enemies
         [Header("Настройки Драконов")]
         [SerializeField] private DragonConfig[] _dragonConfigs;
 
-        private EnemySpawner _spawner;
-
-        private void Awake()
-        {
-            _spawner = new EnemySpawner();
-        }
+        [SerializeField] private EnemySpawner _spawner;
 
         private void Start()
         {
-            SpawnRandomEnemies(_orkConfigs, _spawner.SpawnOrk);
-            SpawnRandomEnemies(_elfConfigs, _spawner.SpawnElf);
-            SpawnRandomEnemies(_dragonConfigs, _spawner.SpawnDragon);
+            SpawnRandomEnemies(_orkConfigs);
+            SpawnRandomEnemies(_elfConfigs);
+            SpawnRandomEnemies(_dragonConfigs);
         }
 
-        private void SpawnRandomEnemies<TConfig>(TConfig[] configs, Func<TConfig, Vector3, Enemy> spawnMethod)
+        private void SpawnRandomEnemies(BaseConfig[] configs)
         {
             if (configs == null || configs.Length == 0)
             {
@@ -42,10 +36,11 @@ namespace Enemies
 
             for (int i = 0; i < ENEMIES_PER_TYPE; i++)
             {
-                TConfig randomConfig = configs[Random.Range(0, configs.Length)];
+                BaseConfig randomConfig = configs[Random.Range(0, configs.Length)];
                 Vector3 randomPosition = GetRandomPosition();
 
-                Enemy enemy = spawnMethod(randomConfig, randomPosition);
+                Enemy enemy = _spawner.Spawn(randomConfig, randomPosition);
+                
                 if (enemy != null)
                     enemy.PrintStats();
             }

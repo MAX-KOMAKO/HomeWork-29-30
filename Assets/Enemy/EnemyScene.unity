@@ -132,8 +132,9 @@ GameObject:
   m_Component:
   - component: {fileID: 103062263}
   - component: {fileID: 103062264}
+  - component: {fileID: 103062265}
   m_Layer: 0
-  m_Name: EnemyExample
+  m_Name: EnemySpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -167,26 +168,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _orkConfigs:
-  - _prefab: {fileID: 6833423772587467031, guid: 6b6b0b9ee2b434851ae79154cec728b0, type: 3}
-    _damage: 10
+  - _damage: 10
     _health: 100
-  - _prefab: {fileID: 6833423772587467031, guid: 6b6b0b9ee2b434851ae79154cec728b0, type: 3}
-    _damage: 20
+  - _damage: 20
     _health: 200
   _elfConfigs:
-  - _prefab: {fileID: 2769327724478419419, guid: d13a6ac1dc9b34da7bc2313c5e61c6c8, type: 3}
-    _mana: 30
+  - _mana: 30
     _agility: 300
-  - _prefab: {fileID: 2769327724478419419, guid: d13a6ac1dc9b34da7bc2313c5e61c6c8, type: 3}
-    _mana: 40
+  - _mana: 40
     _agility: 400
   _dragonConfigs:
-  - _prefab: {fileID: 5143370202068570599, guid: 810bf91df5c7d4ac3a0563c8648bb162, type: 3}
-    _fireDamage: 50
+  - _fireDamage: 50
     _armor: 500
-  - _prefab: {fileID: 5143370202068570599, guid: 810bf91df5c7d4ac3a0563c8648bb162, type: 3}
-    _fireDamage: 60
+  - _fireDamage: 60
     _armor: 600
+  _spawner: {fileID: 103062265}
+--- !u!114 &103062265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 103062261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c81855c5b04d4ff19d6e6dc0a5eba0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _orkPrefab: {fileID: 6833423772587467031, guid: 6b6b0b9ee2b434851ae79154cec728b0, type: 3}
+  _elfPrefab: {fileID: 2769327724478419419, guid: d13a6ac1dc9b34da7bc2313c5e61c6c8, type: 3}
+  _dragonPrefab: {fileID: 5143370202068570599, guid: 810bf91df5c7d4ac3a0563c8648bb162, type: 3}
 --- !u!1 &877157168
 GameObject:
   m_ObjectHideFlags: 0
